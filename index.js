@@ -1,43 +1,18 @@
-//hard-coded clientId
 const MALL_ID = "violetzhou"
-const CLIENT_ID = "vKRKfJADOKRJT5nAM4qEDC"
-const ACCESS_TOKEN = "BhtKfIkdKaWMV5jQ2pkZtA"
-
-//display maillId
-const loadMallId = ()=>{
-    (function(CAFE24API) {
-        $("#mallid-display").html(`<h2>Your mall id is: ${CAFE24API.MALL_ID}</h2>`)
-        })(CAFE24API.init(CLIENT_ID));
-}
-
-//download scriptTag to all pages
-const loadScriptTag = ()=>{
-    const payload = {
-        client_id : CLIENT_ID,
-        display_location: "all",
-        src: "https://vzhou-wish.github.io/cafe24-demo-app/index.js",
-        integrity: "8MZdg2xJQ8T5H8FyZAi32MxDQWamZh1NpmTpf6HWNEM=%"
-    }
-
-    return axios({
-        method: 'post',
-        url: `https://${MALL_ID}.cafe24api.com/api/v2/admin/scripttags`,
-        data: JSON.stringify(payload),
-        headers: {
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
-            'Content-Type': "application/json"
-        }
-      });
-}
+const ACCESS_TOKEN = "O561i3AlHBnrXLeGo8c4sC"
 
 window.addEventListener("load", (event)=>{
-    loadScriptTag()
-    .then(res=>{
-        console.log(res)
-        //now we should have access to the CAFE24API object
-        loadMallId()
+    axios({
+        method:"get",
+        url: `https://${MALL_ID}.cafe24api.com/api/v2/admin/categories/40`,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${ACCESS_TOKEN}`
+        }
     })
-    .catch(err=>{
-        console.log(err);
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data);
+        $("#mallid-display").html(`<h2>${data}</h2>`)
     })
 })
