@@ -1,6 +1,4 @@
 //hard-coded clientId
-const request = require("request")
-
 const MALL_ID = "violetzhou"
 const CLIENT_ID = "vKRKfJADOKRJT5nAM4qEDC"
 const ACCESS_TOKEN = "BhtKfIkdKaWMV5jQ2pkZtA"
@@ -14,29 +12,20 @@ const loadMallId = ()=>{
 
 //download scriptTag to all pages
 const loadScriptTag = ()=>{
-    return new Promise((resolve, reject)=>{
-        const payload = {
-            client_id : CLIENT_ID,
-            display_location: "all"
+    const payload = {
+        client_id : CLIENT_ID,
+        display_location: "all"
+    }
+
+    return axios({
+        method: 'post',
+        url: `https://${MALL_ID}.cafe24api.com/api/v2/admin/scripttags`,
+        data: JSON.stringify(payload),
+        headers: {
+            'Authorization': `Bearer ${ACCESS_TOKEN}`,
+            'Content-Type': "application/json"
         }
-
-        const options = { 
-            method: 'POST',
-            url: `https://${MALL_ID}.cafe24api.com/api/v2/admin/scripttags`,
-            headers: {
-                'Authorization': `Bearer ${ACCESS_TOKEN}`,
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify(payload)
-        };
-
-        request(options, (error, response, body) => {
-            if (error){
-                reject(error)
-            }
-            resolve(body)
-        });
-    })
+      });
 }
 
 window.addEventListener("load", (event)=>{
