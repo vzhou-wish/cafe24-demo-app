@@ -4,8 +4,8 @@ const ACCESS_TOKEN = "O561i3AlHBnrXLeGo8c4sC"
 
 window.addEventListener("load", (event)=>{
     fetch(`https://${MALL_ID}.cafe24api.com/api/v2/admin/categories/40`, {
-        mode: "no-cors",
         method:"GET",
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${ACCESS_TOKEN}`
