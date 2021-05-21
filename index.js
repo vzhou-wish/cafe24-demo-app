@@ -1,13 +1,13 @@
 const MALL_ID = "violetzhou"
-const ACCESS_TOKEN = "O561i3AlHBnrXLeGo8c4sC"
+const CLIENT_ID = "vKRKfJADOKRJT5nAM4qEDC"
+//const ACCESS_TOKEN = "O561i3AlHBnrXLeGo8c4sC"
 
 window.addEventListener("load", (event)=>{
-    axios({
-        method:"get",
-        url: `https://${MALL_ID}.cafe24api.com/api/v2/admin/categories/40`,
+    fetch(`https://${MALL_ID}.cafe24api.com/api/v2/products`, {
+        method:"GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${ACCESS_TOKEN}`
+            "X-Cafe24-Client-Id": `${CLIENT_ID}`
         }
     })
     .then(res=>res.json())
