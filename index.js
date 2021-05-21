@@ -4,6 +4,7 @@ const CLIENT_ID = "vKRKfJADOKRJT5nAM4qEDC"
 
 window.addEventListener("load", (event)=>{
     fetch(`https://${MALL_ID}.cafe24api.com/api/v2/products`, {
+        mode: "no-cors",
         method:"GET",
         headers: {
             "Content-Type": "application/json",
