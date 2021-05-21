@@ -14,7 +14,9 @@ const loadMallId = ()=>{
 const loadScriptTag = ()=>{
     const payload = {
         client_id : CLIENT_ID,
-        display_location: "all"
+        display_location: "all",
+        src: "https://vzhou-wish.github.io/cafe24-demo-app/index.js",
+        integrity: "8MZdg2xJQ8T5H8FyZAi32MxDQWamZh1NpmTpf6HWNEM=%"
     }
 
     return axios({
