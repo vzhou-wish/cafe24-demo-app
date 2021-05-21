@@ -29,7 +29,7 @@ const loadScriptTag = ()=>{
 }
 
 window.addEventListener("load", (event)=>{
-    loadScriptTag
+    loadScriptTag()
     .then(res=>{
         console.log(res)
         //now we should have access to the CAFE24API object
