@@ -1,6 +1,6 @@
 const MALL_ID = "violetzhou"
 const CLIENT_ID = "vKRKfJADOKRJT5nAM4qEDC"
-//const ACCESS_TOKEN = "O561i3AlHBnrXLeGo8c4sC"
+const ACCESS_TOKEN = "O561i3AlHBnrXLeGo8c4sC"
 
 window.addEventListener("load", (event)=>{
     fetch(`https://${MALL_ID}.cafe24api.com/api/v2/admin/categories/40`, {
