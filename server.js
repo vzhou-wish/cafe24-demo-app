@@ -4,7 +4,7 @@ const http = require("http")
 const cors = require("cors")
 const port = process.env.PORT || 3000
 
-const getInfoController = require("./controllers/getInfoController");
+const {getInfoController} = require("./controllers/getInfoController");
 
 const corsConfig = {
   origin: "https://guarded-beyond-10106.herokuapp.com",

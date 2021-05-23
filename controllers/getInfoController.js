@@ -1,5 +1,5 @@
 const axios = require("axios")
-require("dot-env").config()
+require("dotenv").config()
 const MALL_ID = process.env.MALL_ID
 const CLIENT_ID = process.env.CLIENT_ID
 //const ACCESS_TOKEN = process.env.ACCESS_TOKEN
@@ -13,10 +13,13 @@ exports.getInfoController = async (req, res, next) => {
             "X-Cafe24-Client-Id": `${CLIENT_ID}`
         }
     })
-    .then(res=>res.json())
     .then(data=>{
-        console.log(data);
-        res.json(data);
+        const d = data.data.products;
+        const response = {
+            status: 200,
+            data: d
+        }
+        res.json(response);
     })
     .catch(err=>{
         console.log(err);
