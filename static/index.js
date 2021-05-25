@@ -1,5 +1,6 @@
 window.addEventListener("load", (event)=>{
-    fetch(`/get-info`, {
+    //visit Font API endpoint
+    fetch("/font", {
         method:"GET"
     })
     .then(res=>res.json())
@@ -11,9 +12,28 @@ window.addEventListener("load", (event)=>{
                 innerHTML += `<p>${product.product_name} : ${product.price}</p>`;
             }
         }
-        $("#info-display").html(`${innerHTML}`);
+        $("#font-display").html(`${innerHTML}`);
     })
     .catch(err=>{
         console.log(err);
+    })
+
+    //visit Admin API endpoint
+    fetch("/admin", {
+        method: "GET"
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data);
+        if (data.status == 401){
+            $("#admin-display").html(`<a href=\"/auth\" role="button"> Authenticate </a>`);
+        } else if (data.status == 200) {
+            $("#admin-display").html(`${data}`);
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(err =>{
+       console.log(err);
     })
 })

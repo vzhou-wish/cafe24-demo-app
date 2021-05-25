@@ -4,7 +4,9 @@ const http = require("http")
 const cors = require("cors")
 const port = process.env.PORT || 3000
 
-const {getInfoController} = require("./controllers/getInfoController");
+const { auth } = require("./middleware/auth");
+const { fontController } = require("./controllers/fontController");
+const { adminController } = require("./controllers/adminController")
 const OAuthRouter = require("./routers/OAuthRouter");
 
 const corsConfig = {
@@ -20,7 +22,9 @@ app.use(express.static(path.join(__dirname, "./static")))
 
 app.use('/auth', OAuthRouter)
 
-app.get('/get-info', getInfoController)
+app.get('/font', fontController)
+
+app.get("/admin", auth, adminController)
 
 //catch-all endpoint
 app.use('*', (req, res, next)=>{
@@ -29,14 +33,11 @@ app.use('*', (req, res, next)=>{
 
 // global error handler
 app.use((err, req, res, next) => {
-    const defaultErr = {
-      log: 'Express error handler caught unkown middleware error!',
-      status: 500,
-      message: { err: 'An error occurred!' },
+    const errorMsg = {
+      message: err.message || 'Express error handler caught unkown middleware error!',
+      status: err.status || 500,
     };
-    const errorObj = Object.assign(defaultErr, err);
-    console.log(errorObj.log);
-    return res.status(errorObj.status).json(errorObj.message);
+    return res.status(errorMsg.status).json(errorMsg);
   });
 
 const server = http.createServer(app)

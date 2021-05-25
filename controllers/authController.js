@@ -1,10 +1,12 @@
 const { AuthorizationCode } = require('simple-oauth2');
 require("dotenv").config()
 
+const NodeCache = require( "node-cache" );
+const cache = new NodeCache();
+
 const MALL_ID = process.env.MALL_ID
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
-const redirect_uri = "https://guarded-beyond-10106.herokuapp.com/auth/callback";
 
 //to-do: remove the hard-coded values and move these to another file
 const client = new AuthorizationCode({
@@ -20,6 +22,8 @@ const client = new AuthorizationCode({
     },
   });
    
+  const redirect_uri = "https://guarded-beyond-10106.herokuapp.com/auth/callback";
+
   // Authorization uri definition
   const authorizationUri = client.authorizeURL({
     redirect_uri: redirect_uri,
@@ -33,7 +37,7 @@ exports.auth = async (req, res, next) => {
 
 exports.authCallback = async (req, res, next) => {
     const { code } = req.query;
-    const redirect_uri = "https://guarded-beyond-10106.herokuapp.com/auth/callback";
+    const redirect_uri = "https://guarded-beyond-10106.herokuapp.com";
     const options = {
       code,
       redirect_uri
@@ -44,9 +48,13 @@ exports.authCallback = async (req, res, next) => {
 
       console.log('The resulting token: ', result.token);
 
+      //store the token in in-memory storage
+      console.log("cache: ")
+      console.log(cache.set(MALL_ID, result.token));
+
       return res.status(200).json(result.token);
-    } catch (error) {
-      console.error('Access Token Error', error);
-      return res.status(500).json('Authentication failed');
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
 }
