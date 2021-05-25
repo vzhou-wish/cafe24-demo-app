@@ -28,7 +28,14 @@ window.addEventListener("load", (event)=>{
         if (data.status == 401){
             $("#admin-display").html(`<a href=\"/auth\" role="button"> Authenticate </a>`);
         } else if (data.status == 200) {
-            $("#admin-display").html(`${data}`);
+            const products = data.data;
+            let innerHTML = "";
+            for (const product of products){
+                if (product.product_name && product.supply_price){
+                    innerHTML += `<p>${product.product_name} : ${product.supply_price}</p>`;
+                }
+            }
+            $("#admin-display").html(`${innerHTML}`);
         } else {
             throw new Error(data.message);
         }
