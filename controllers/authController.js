@@ -12,17 +12,17 @@ const client = new AuthorizationCode({
       secret: CLIENT_SECRET,
     },
     auth: {
-      tokenHost: `https://${MALL_ID}.cafe24api.com/api/v2`,
-      tokenPath: '/oauth/token',
-      authorizeHost: `https://${MALL_ID}.cafe24api.com/api/v2`,
-      authorizePath: '/oauth/authorize',
+      tokenHost: `https://${MALL_ID}.cafe24api.com`,
+      tokenPath: '/api/v2/oauth/token',
+      authorizeHost: `https://${MALL_ID}.cafe24api.com`,
+      authorizePath: '/api/v2/oauth/authorize',
     },
   });
    
   // Authorization uri definition
   const authorizationUri = client.authorizeURL({
     redirect_uri: "https://guarded-beyond-10106.herokuapp.com/auth/callback",
-    scope: 'mall.read_product, mall.read_application',
+    scope: 'mall.read_product,mall.read_application',
     state: '3(#0/!~',
   });
 
