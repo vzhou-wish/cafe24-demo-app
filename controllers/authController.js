@@ -22,8 +22,7 @@ const client = new AuthorizationCode({
   // Authorization uri definition
   const authorizationUri = client.authorizeURL({
     redirect_uri: "https://guarded-beyond-10106.herokuapp.com/auth/callback",
-    scope: 'mall.read_product,mall.read_application',
-    state: '3(#0/!~',
+    scope: 'mall.read_product,mall.read_application'
   });
 
 exports.auth = async (req, res, next) => {
@@ -45,7 +44,7 @@ exports.authCallback = async (req, res, next) => {
 
       return res.status(200).json(result.token);
     } catch (error) {
-      console.error('Access Token Error', error.message);
+      console.error('Access Token Error', error);
       return res.status(500).json('Authentication failed');
     }
 }
