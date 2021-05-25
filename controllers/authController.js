@@ -49,8 +49,8 @@ exports.authCallback = async (req, res, next) => {
       console.log('The resulting token: ', result.token);
 
       //store the token in in-memory storage
-      console.log("cache: ")
-      console.log(cache.set(MALL_ID, result.token));
+      cache.set(MALL_ID, result.token);
+      console.log( "token", cache.get(MALL_ID))
 
       return res.status(200).json(result.token);
     } catch (err) {
