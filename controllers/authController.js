@@ -32,8 +32,10 @@ exports.auth = async (req, res, next) => {
 
 exports.authCallback = async (req, res, next) => {
     const { code } = req.query;
+    const redirect_uri = "https://guarded-beyond-10106.herokuapp.com/auth/callback";
     const options = {
       code,
+      redirect_uri
     };
 
     try {
