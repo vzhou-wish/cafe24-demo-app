@@ -1,8 +1,6 @@
 const { AuthorizationCode } = require('simple-oauth2');
 require("dotenv").config()
-
-const NodeCache = require( "node-cache" );
-const cache = new NodeCache();
+const { cache } = require('../utils/cache');
 
 const MALL_ID = process.env.MALL_ID
 const CLIENT_ID = process.env.CLIENT_ID
@@ -46,13 +44,12 @@ exports.authCallback = async (req, res, next) => {
     try {
       const result = await client.getToken(options);
 
-      console.log('The resulting token: ', result.token);
+      console.log('The resulting token: ', result.token.access_token);
 
       //store the token in in-memory storage
-      cache.set(MALL_ID, result.token);
-      console.log( "token", cache.get(MALL_ID))
+      cache.set(MALL_ID, result.token.access_token);
 
-      return res.status(200).json(result.token);
+      return res.status(200).json(result.token.access_token);
     } catch (err) {
       console.log(err);
       next(err);
