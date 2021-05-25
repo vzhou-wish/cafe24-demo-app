@@ -50,13 +50,13 @@ exports.authCallback = async (req, res, next) => {
 //should work
 const getToken = async (code) => {
   axios({
-      method:"get",
+      method:"post",
       url: `https://${MALL_ID}.cafe24api.com/api/v2/oauth/token`,
       headers: {
           "Authorization": `Basic ${Buffer.from(`${CLIENT_ID} : ${CLIENT_SECRET}`).toString('base64')}`,
           "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: {
+      data: {
           "grant_type" : "authorization_code",
           "code" : `${code}`
       }
