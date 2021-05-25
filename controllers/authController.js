@@ -33,18 +33,39 @@ exports.auth = async (req, res, next) => {
 
 exports.authCallback = async (req, res, next) => {
     const { code } = req.query;
-    const options = {
-      code,
-    };
 
     try {
-      const accessToken = await client.getToken(options);
+      const res = await getToken(code);
 
-      console.log('The resulting token: ', accessToken.token);
+      // console.log('The resulting token: ', accessToken.token);
 
-      return res.status(200).json(accessToken.token);
+      return res.status(200).json(res);
     } catch (error) {
       console.error('Access Token Error', error.message);
       return res.status(500).json('Authentication failed');
     }
+}
+
+//should work
+const getToken = async (code) => {
+  axios({
+      method:"get",
+      url: `https://${MALL_ID}.cafe24api.com/api/v2/oauth/token`,
+      headers: {
+          "Authorization": `Basic ${base64_encode(`${client_id} : ${client_Secret}`)}`,
+          "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: {
+          "grant_type" : "authorization_code",
+          "code" : `${code}`
+      }
+  })
+  .then(data=>{
+      console.log(data);
+      return data
+      //return token here
+  })
+  .catch(err=>{
+      console.log(err);
+  })
 }
