@@ -38,11 +38,12 @@ exports.authCallback = async (req, res, next) => {
     };
 
     try {
-      const accessToken = await client.getToken(options);
+      const result = await client.getToken(options);
 
-      console.log('The resulting token: ', accessToken.token);
+      console.log(result);
+      console.log('The resulting token: ', result.token);
 
-      return res.status(200).json(accessToken.token);
+      return res.status(200).json(result.token);
     } catch (error) {
       console.error('Access Token Error', error.message);
       return res.status(500).json('Authentication failed');
