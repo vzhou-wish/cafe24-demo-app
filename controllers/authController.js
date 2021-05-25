@@ -53,7 +53,7 @@ const getToken = async (code) => {
       method:"get",
       url: `https://${MALL_ID}.cafe24api.com/api/v2/oauth/token`,
       headers: {
-          "Authorization": `Basic ${Buffer.from(`${client_id} : ${client_Secret}`).toString('base64')}`,
+          "Authorization": `Basic ${Buffer.from(`${CLIENT_ID} : ${CLIENT_SECRET}`).toString('base64')}`,
           "Content-Type": "application/x-www-form-urlencoded"
       },
       body: {
