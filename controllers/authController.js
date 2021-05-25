@@ -4,6 +4,7 @@ require("dotenv").config()
 const MALL_ID = process.env.MALL_ID
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
+const redirect_uri = "https://guarded-beyond-10106.herokuapp.com/auth/callback";
 
 //to-do: remove the hard-coded values and move these to another file
 const client = new AuthorizationCode({
@@ -21,8 +22,8 @@ const client = new AuthorizationCode({
    
   // Authorization uri definition
   const authorizationUri = client.authorizeURL({
-    redirect_uri: "https://guarded-beyond-10106.herokuapp.com/auth/callback",
-    scope: 'mall.read_product,mall.read_application'
+    redirect_uri: redirect_uri,
+    scope: 'mall.read_product,mall.read_application',
   });
 
 exports.auth = async (req, res, next) => {
@@ -41,7 +42,6 @@ exports.authCallback = async (req, res, next) => {
     try {
       const result = await client.getToken(options);
 
-      console.log(result);
       console.log('The resulting token: ', result.token);
 
       return res.status(200).json(result.token);
