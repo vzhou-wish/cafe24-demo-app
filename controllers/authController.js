@@ -1,4 +1,5 @@
 const { AuthorizationCode } = require('simple-oauth2');
+const axios = require("axios")
 require("dotenv").config()
 
 const MALL_ID = process.env.MALL_ID
