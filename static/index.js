@@ -2,8 +2,8 @@ window.addEventListener("load", (event)=>{
     //get mall id from the url
     //there is probably a better way to do this
     const url = window.location.href;
+    console.log("url is: ", url)
     const regex =  /https:\/\/(.*)\.cafe24shop\.com/;
-    console.log(url.match(regex));
     const mallId = url.match(regex)[1]
 
     //visit front API endpoint
