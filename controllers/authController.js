@@ -23,26 +23,28 @@ const createClient = (mall_id) => {
 }
 
 exports.auth = async (req, res, next) => {
-    const {mall_id} = req.params;
+    const {mall_id} = req.query;
     if (!mall_id){
       let err = new Error("mall_id is missing!");
       err.status = 400;
       next(err);
-  }
+    }
     const client = createClient(mall_id);
-    const redirect_uri = "https://guarded-beyond-10106.herokuapp.com/auth/callback";
+    const redirect_uri = `https://guarded-beyond-10106.herokuapp.com/auth/callback`;
 
     // Authorization uri definition
     const authorizationUri = client.authorizeURL({
       redirect_uri: redirect_uri,
       scope: 'mall.read_product,mall.read_application',
+      state: mall_id
     });
     console.log(authorizationUri);
     res.redirect(authorizationUri);
 }
 
 exports.authCallback = async (req, res, next) => {
-    const { code } = req.query;
+    const { code, mall_id } = req.query;
+    const client = createClient(mall_id);
     const redirect_uri = "https://guarded-beyond-10106.herokuapp.com";
     const options = {
       code,

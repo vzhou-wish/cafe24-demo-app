@@ -3,7 +3,7 @@ require("dotenv").config()
 const CLIENT_ID = process.env.CLIENT_ID
 
 exports.fontController = async (req, res, next) => {
-    const {mall_id} = req.params;
+    const {mall_id} = req.query;
     if (!mall_id){
         let err = new Error("mall_id is missing!");
         err.status = 400;
