@@ -5,7 +5,7 @@ const cors = require("cors")
 const port = process.env.PORT || 3000
 
 const { auth } = require("./middleware/auth");
-const { fontController } = require("./controllers/fontController");
+const { frontController } = require("./controllers/frontController");
 const { adminController } = require("./controllers/adminController")
 const OAuthRouter = require("./routers/OAuthRouter");
 
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, "./static")))
 
 app.use('/auth', OAuthRouter)
 
-app.get('/font', fontController)
+app.get('/front', frontController)
 
 app.get("/admin", auth, adminController)
 

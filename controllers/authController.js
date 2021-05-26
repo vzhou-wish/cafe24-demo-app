@@ -44,7 +44,11 @@ exports.auth = async (req, res, next) => {
 
 exports.authCallback = async (req, res, next) => {
     const { code, state } = req.query;
-    console.log("state is: ", state);
+    if (!state){
+      let err = new Error("mall_id is missing!");
+      err.status = 400;
+      next(err);
+    }
     const client = createClient(state);
     const redirect_uri = "https://guarded-beyond-10106.herokuapp.com";
     const options = {

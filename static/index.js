@@ -1,14 +1,13 @@
 window.addEventListener("load", (event)=>{
     //get mall id from the url
     //there is probably a better way to do this
-    // const url = window.location.href;
-    const url = "https://violetzhou.cafe24shop.com/disp/admin/shop1/myapps/Open"
+    const url = window.location.href;
     const regex =  /https:\/\/(.*)\.cafe24shop\.com/;
     console.log(url.match(regex));
     const mallId = url.match(regex)[1]
 
-    //visit Font API endpoint
-    fetch(`/font?mall_id=${mallId}`, {
+    //visit front API endpoint
+    fetch(`/front?mall_id=${mallId}`, {
         method:"GET"
     })
     .then(res=>res.json())
@@ -20,7 +19,7 @@ window.addEventListener("load", (event)=>{
                 innerHTML += `<p>${product.product_name}, price: ${product.price}</p>`;
             }
         }
-        $("#font-display").html(`${innerHTML}`);
+        $("#front-display").html(`${innerHTML}`);
     })
     .catch(err=>{
         console.log(err);
