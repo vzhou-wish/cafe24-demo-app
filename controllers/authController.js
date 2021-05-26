@@ -49,7 +49,8 @@ exports.authCallback = async (req, res, next) => {
       //store the token in in-memory storage
       cache.set(MALL_ID, result.token.access_token);
 
-      return res.status(200).json(result.token.access_token);
+      //mauually redirect the user since cafe24 redirection doesn't work
+      res.redirect(redirect_uri);
     } catch (err) {
       console.log(err);
       next(err);
