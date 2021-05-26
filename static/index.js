@@ -1,6 +1,12 @@
 window.addEventListener("load", (event)=>{
+    //get mall id from the url
+    //there is probably a better way to do this
+    const url = window.location.href;
+    const regex =  /https:\/\/(.*)\.cafe24shop\.com/;
+    const mallId = url.match(regex)[1]
+
     //visit Font API endpoint
-    fetch("/font", {
+    fetch(`/font?mall_id=${mallId}`, {
         method:"GET"
     })
     .then(res=>res.json())
@@ -19,14 +25,14 @@ window.addEventListener("load", (event)=>{
     })
 
     //visit Admin API endpoint
-    fetch("/admin", {
+    fetch(`/admin?mall_id=${mallId}`, {
         method: "GET"
     })
     .then(res=>res.json())
     .then(data=>{
         console.log(data);
         if (data.status == 401){
-            $("#admin-display").html(`<a href=\"/auth\" role="button"> You need to authenticate to visit Admin API </a>`);
+            $("#admin-display").html(`<a href=\"/auth?mall_id=${mallId}\" role="button"> You need to authenticate to visit Admin API </a>`);
         } else if (data.status == 200) {
             const products = data.data;
             let innerHTML = "";

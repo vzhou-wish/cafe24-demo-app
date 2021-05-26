@@ -1,8 +1,13 @@
 const axios = require("axios")
 require("dotenv").config()
-const MALL_ID = process.env.MALL_ID
 
 exports.adminController = async (req, res, next) => {
+    const { mall_id } = req.params;
+    if (!mall_id){
+        let err = new Error("mall_id is missing!");
+        err.status = 400;
+        next(err);
+    }
     //auth token is required
     const {token} = req;
     if (!token){
@@ -12,7 +17,7 @@ exports.adminController = async (req, res, next) => {
     } else {
         axios({
             method:"get",
-            url: `https://${MALL_ID}.cafe24api.com/api/v2/admin/products`,
+            url: `https://${mall_id}.cafe24api.com/api/v2/admin/products`,
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`

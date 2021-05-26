@@ -1,13 +1,18 @@
 const axios = require("axios")
 require("dotenv").config()
-const MALL_ID = process.env.MALL_ID
 const CLIENT_ID = process.env.CLIENT_ID
 
 exports.fontController = async (req, res, next) => {
+    const {mall_id} = req.params;
+    if (!mall_id){
+        let err = new Error("mall_id is missing!");
+        err.status = 400;
+        next(err);
+    }
     //no auth token required
     axios({
         method:"get",
-        url: `https://${MALL_ID}.cafe24api.com/api/v2/products`,
+        url: `https://${mall_id}.cafe24api.com/api/v2/products`,
         headers: {
             "Content-Type": "application/json",
             "X-Cafe24-Client-Id": `${CLIENT_ID}`
